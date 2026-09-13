@@ -1,23 +1,33 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+
 function App() {
   const [users, setUsers] = useState([]);
+  const [addedStack, setAddedStack] = useState([]);
 
   const usersFetch = async () => {
     try {
       const response = await fetch('/cart.json');
       const data = await response.json();
-      console.log(data);
       setUsers(data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  }
-
+  };
 
   useEffect(() => {
     usersFetch();
   }, []);
+
+
+  const handleToggleStack = (user) => {
+    console.log("Clicked User Data:", user);
+    if (addedStack.some((item) => item.id === user.id)) {
+      setAddedStack(addedStack.filter((item) => item.id !== user.id));
+    } else {
+      setAddedStack([...addedStack, user]);
+    }
+  };
 
   return (
     <>
@@ -137,8 +147,10 @@ function App() {
                     <span> {user.difficulty}</span>
                     <span className="text-amber-500 font-medium">⭐ {user.rating}</span>
                   </div>
-                  <button className="w-full bg-[#0F172A] text-white py-2.5 rounded-xl font-medium hover:bg-black transition cursor-pointer">
-                    Add to Stack
+                  <button
+                    onClick={() => handleToggleStack(user)}
+                    className={`w-full bg-[#0F172A] text-white py-2.5 rounded-xl font-medium hover:bg-black transition cursor-pointer ${addedStack.some((item) => item.id === user.id) ? "btn-success" : ""}`}>
+                    {addedStack.some((item) => item.id === user.id) ? "Added" : "Add to Stack"}
                   </button>
                 </div>
               </div>
@@ -150,11 +162,51 @@ function App() {
           <div className="lg:col-span-1">
             <div className="bg-white border border-gray-200 rounded-2xl p-5 sticky top-6">
               <h3 className="font-bold text-lg mb-1">Your Stack</h3>
-              <p className="text-xs text-gray-400 mb-6">No technologies selected yet.</p>
+              <p className="text-xs text-gray-400 mb-4">
+                {addedStack.length} {addedStack.length === 1 ? "Technology Selected" : "Technologies Selected"}
+              </p>
 
-              <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center text-sm text-gray-400">
-                Your stack is empty.
-              </div>
+              {addedStack.length === 0 ? (
+                <>
+                  <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center text-sm text-gray-400 mt-2">
+                    Your stack is empty.
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-3 mt-2">
+                  {addedStack.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between bg-white border border-gray-200 p-3 rounded-xl shadow-xs">
+
+                      <div className="flex items-center gap-3">
+                        <img src={item.icon} alt={item.name} className="w-8 h-8 object-contain" />
+                        <div>
+                          <h4 className="text-sm font-bold text-gray-900">{item.name}</h4>
+                          <span className="text-[11px] text-gray-400 block font-medium">
+                            {item.category}
+                          </span>
+                        </div>
+                      </div>
+
+
+                      <button
+                        onClick={() => handleToggleStack(item)}
+                        className="text-gray-400 hover:text-red-500 font-bold p-1 cursor-pointer transition-colors"
+                        title="Remove"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+
+                  {/* Remove All Button */}
+                  <button
+                    onClick={() => setAddedStack([])}
+                    className="w-full mt-4 py-2.5 border border-red-200 text-red-500 font-medium text-sm rounded-xl hover:bg-red-50 transition cursor-pointer"
+                  >
+                    Remove All
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -169,7 +221,7 @@ function App() {
 
             <div className="col-span-5 space-y-4">
               <span className="flex items-center gap-2 ">
-              <img src="../public/logo-text.png" alt="React Logo" />
+                <img src="../public/logo-text.png" alt="React Logo" />
               </span>
 
               <p className="text-sm text-gray-500 max-w-sm">
@@ -236,5 +288,4 @@ function App() {
     </>
   )
 }
-
 export default App
