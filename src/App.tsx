@@ -1,14 +1,30 @@
+import { useState, useEffect } from 'react'
 import './App.css'
-
 function App() {
+  const [users, setUsers] = useState([]);
 
+  const usersFetch = async () => {
+    try {
+      const response = await fetch('/cart.json');
+      const data = await response.json();
+      console.log(data);
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
+
+
+  useEffect(() => {
+    usersFetch();
+  }, []);
 
   return (
     <>
-      <section className="shadow-sm">
+      <section className="shadow-sm sticky top-0 z-50">
 
 
-        <div className="navbar bg-base-100  max-w-8/12 mx-auto">
+        <div className="navbar bg-base-100  max-w-8/12 mx-auto ">
           <div className="navbar-start ">
             <div className="dropdown">
               <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -84,65 +100,65 @@ function App() {
 
 
       <section className="max-w-8/12 mx-auto py-12">
-      {/* Header */}
-      <div className="mb-8">
-        <h2 className="text-4xl font-bold">
-          Explore the <span className="bg-linear-to-r from-[#F97316] to-[#EC4899] bg-clip-text text-transparent">Technologies</span>
-        </h2>
-        <p className="text-gray-500 mt-2">Pick one technology per category to build your ideal stack.</p>
-      </div>
+        {/* Header */}
+        <div className="mb-8">
+          <h2 className="text-4xl font-bold">
+            Explore the <span className="bg-linear-to-r from-[#F97316] to-[#EC4899] bg-clip-text text-transparent">Technologies</span>
+          </h2>
+          <p className="text-gray-500 mt-2">Pick one technology per category to build your ideal stack.</p>
+        </div>
 
-      {/* Cards and Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        
-        <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
-            
-            
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-2xl">⚛️</span>
-                <span className="text-xs bg-sky-50 text-sky-600 px-2.5 py-1 rounded-full font-medium">
-                  Popular
-                </span>
-              </div>
-              <h3 className="text-lg font-bold mb-1">React</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                A declarative, component-based JavaScript library for building modern user interfaces.
-              </p>
-            </div>
+        {/* Cards and Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-            
-            <div>
-              <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                <span className="bg-gray-100 px-2 py-1 rounded">Frontend</span>
-                <span>Beginner-Friendly</span>
-                <span className="text-amber-500 font-medium">⭐ 4.9</span>
+          <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+
+
+            {/*Mapping and displaying fetched API Users */}
+            {users.map(user => (
+              <div key={user.id} className="bg-white border border-gray-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                  <div className="flex justify-between items-center mb-4">
+                    <img src={user.icon} alt={user.name} className="w-10 h-10" />
+                    <span className="text-xs bg-sky-50 text-sky-600 px-2.5 py-1 rounded-full font-medium">
+                      {user.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-1">{user.name}</h3>
+                  <p className="text-sm text-gray-500 mb-4">
+                    {user.description}
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                    <span className="bg-gray-100 px-2 py-1 rounded">{user.category}</span>
+                    <span> {user.difficulty}</span>
+                    <span className="text-amber-500 font-medium">⭐ {user.rating}</span>
+                  </div>
+                  <button className="w-full bg-[#0F172A] text-white py-2.5 rounded-xl font-medium hover:bg-black transition cursor-pointer">
+                    Add to Stack
+                  </button>
+                </div>
               </div>
-              <button className="w-full bg-[#0F172A] text-white py-2.5 rounded-xl font-medium hover:bg-black transition cursor-pointer">
-                Add to Stack
-              </button>
-            </div>
+            ))}
 
           </div>
 
-        </div>
+          {/* Right Side */}
+          <div className="lg:col-span-1">
+            <div className="bg-white border border-gray-200 rounded-2xl p-5 sticky top-6">
+              <h3 className="font-bold text-lg mb-1">Your Stack</h3>
+              <p className="text-xs text-gray-400 mb-6">No technologies selected yet.</p>
 
-        {/* Right Side */}
-        <div className="lg:col-span-1">
-          <div className="bg-white border border-gray-200 rounded-2xl p-5 sticky top-6">
-            <h3 className="font-bold text-lg mb-1">Your Stack</h3>
-            <p className="text-xs text-gray-400 mb-6">No technologies selected yet.</p>
-            
-            <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center text-sm text-gray-400">
-              Your stack is empty.
+              <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center text-sm text-gray-400">
+                Your stack is empty.
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-    </section>
+        </div>
+      </section>
     </>
   )
 }
