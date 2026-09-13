@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import bannerStackImage from './assets/banner-stack.png';
+import logotext from './assets/logo-text.png';
 import './App.css'
 
 interface User {
@@ -99,7 +101,7 @@ function App() {
               </ul>
             </div>
             <div className="flex items-center ml-2 lg:ml-0">
-              <img src="../public/logo-text.png" alt="React Logo" className="h-7 sm:h-8 w-auto object-contain" />
+              <img src={logotext} alt="React Logo" className="h-7 sm:h-8 w-auto object-contain" />
             </div>
           </div>
           <div className="navbar-center hidden lg:flex font-bold">
@@ -143,7 +145,7 @@ function App() {
             </div>
           </div>
           <div className="flex justify-center items-end">
-            <img src="../public/banner-stack.png" alt="Hero Image" />
+            <img src={bannerStackImage} alt="Hero Image" />
           </div>
         </div>
       </section>
