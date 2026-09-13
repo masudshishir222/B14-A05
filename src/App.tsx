@@ -3,8 +3,20 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 
+interface User {
+  id: number;
+  name: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  rating: number;
+  badge: string;
+  icon: string;
+}
+
+
 function App() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [addedStack, setAddedStack] = useState(() => {
@@ -37,10 +49,10 @@ function App() {
     localStorage.setItem("devStack", JSON.stringify(addedStack));
   }, [addedStack]);
 
-  const handleAddToStack = (user) => {
+  const handleAddToStack = (user: User) => {
     console.log("Clicked User Data:", user);
 
-    if (!addedStack.some((item) => item.id === user.id)) {
+    if (!addedStack.some((item: any) => item.id === user.id)) {
       setAddedStack([...addedStack, user]);
       toast.success(`${user.name} added to stack!`, {
         position: "top-right",
@@ -49,8 +61,8 @@ function App() {
     }
   };
 
-  const handleRemoveFromStack = (user) => {
-    setAddedStack(addedStack.filter((item) => item.id !== user.id));
+  const handleRemoveFromStack = (user: User) => {
+    setAddedStack(addedStack.filter((item: any) => item.id !== user.id));
     toast.error(`${user.name} removed from stack!`, {
       position: "top-right",
       autoClose: 1000,
@@ -158,7 +170,7 @@ function App() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {users.map(user => {
-                  const isAdded = addedStack.some((item) => item.id === user.id);
+                  const isAdded = addedStack.some((item: any) => item.id === user.id);
                   return (
                     <div key={user.id} className="bg-white border border-gray-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
                       <div>
@@ -212,7 +224,7 @@ function App() {
                 </>
               ) : (
                 <div className="space-y-3 mt-2">
-                  {addedStack.map((item) => (
+                  {addedStack.map((item: any) => (
                     <div key={item.id} className="flex items-center justify-between bg-white border border-gray-200 p-3 rounded-xl shadow-xs">
 
                       <div className="flex items-center gap-3">
