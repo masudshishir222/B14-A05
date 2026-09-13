@@ -21,6 +21,7 @@ function App() {
 
   return (
     <>
+      {/* Navbar Section */}
       <section className="shadow-sm sticky top-0 z-50">
 
 
@@ -60,11 +61,11 @@ function App() {
         </div>
       </section>
 
-      {/* hero section */}
+      {/* Hero section */}
       <section className="max-w-8/12 mx-auto pt-10">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 py-10 items-center">
-          {/* hero content  */}
+          {/* Hero content  */}
           <div>
             <h1 className="text-6xl font-bold">
               Build Your Ideal <br />
@@ -159,6 +160,79 @@ function App() {
 
         </div>
       </section>
+
+      {/* Footer Section */}
+      <footer>
+        <div className="max-w-8/12 mx-auto px-4 pt-16 pb-12">
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
+
+            <div className="col-span-5 space-y-4">
+              <span className="flex items-center gap-2 ">
+              <img src="../public/logo-text.png" alt="React Logo" />
+              </span>
+
+              <p className="text-sm text-gray-500 max-w-sm">
+                Curated tools, technologies, and resources for developers building modern software.
+              </p>
+
+              <div>
+                <ul className="flex space-x-6 pt-2 text-sm font-medium text-gray-800">
+                  <li className="hover:text-pink-600 transition-colors">GitHub</li>
+                  <li className="hover:text-pink-600 transition-colors">Twitter</li>
+                  <li className="hover:text-pink-600 transition-colors">LinkedIn</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="col-span-7 grid grid-cols-3 gap-8">
+
+              <div>
+                <h3 className="text-xs font-bold tracking-wider text-gray-900 uppercase mb-4">
+                  PRODUCT
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-500">
+                  <li className="hover:text-gray-900 transition-colors">Home</li>
+                  <li className="hover:text-gray-900 transition-colors">Technologies</li>
+                  <li className="hover:text-gray-900 transition-colors">Projects</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xs font-bold tracking-wider text-gray-900 uppercase mb-4">
+                  COMPANY
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-500">
+                  <li className="hover:text-gray-900 transition-colors">About</li>
+                  <li className="hover:text-gray-900 transition-colors">Contact</li>
+                  <li className="hover:text-gray-900 transition-colors">Careers</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-xs font-bold tracking-wider text-gray-900 uppercase mb-4">
+                  LEGAL
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-500">
+                  <li className="hover:text-gray-900 transition-colors">Privacy Policy</li>
+                  <li className="hover:text-gray-900 transition-colors">Terms of Service</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="border-t border-gray-100 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-400">
+            <p>© 2026 Dev Stack. All rights reserved.</p>
+            <div>
+              <ul className="flex space-x-6 mt-4 sm:mt-0">
+                <li className="hover:text-gray-600 transition-colors">Privacy</li>
+                <li className="hover:text-gray-600 transition-colors">Terms</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   )
 }
