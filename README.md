@@ -1,75 +1,52 @@
-# React + TypeScript + Vite
+# Dev Stack — Build Your Ideal Development Stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Dev Stack** is a modern, interactive web application designed for developers to explore various frontend, backend, database, and tooling technologies, compare them side-by-side, and curate their ideal project tech stack.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
+1. **Interactive Technology Exploration:** Browse through a curated list of popular web development technologies complete with details, ratings, difficulties, and badges.
+2. **Dynamic Stack Management:** Add or remove technologies to/from your custom stack in real-time with instant UI updates and persistent storage using **Browser LocalStorage**.
+3. **Toast Notifications & Bulk Actions:** Get instant feedback via **React Toastify** alerts when adding or removing items, and easily clear your entire stack with a single click.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 💻 Technologies Used
+* **React.js** (Frontend Library)
+* **Tailwind CSS & DaisyUI** (Styling & UI Components)
+* **JavaScript (ES6+)**
+* **React-Toastify** (For pop-up notifications)
+* **JSON** (Local data source)
+* **Vite** (Build Tool)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ❓ React Concepts & Interview Answers
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. What is JSX, and why is it used in React?
+**JSX** stands for JavaScript XML. It allows us to write HTML-like syntax directly inside JavaScript files. It is used in React because it makes the code cleaner, more readable, and easier to write UI structures without having to use complex `createElement` functions.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 2. What is the difference between props and state?
+* **Props (Properties):** These are read-only inputs passed from parent components to child components to configure or display data. They are immutable (cannot be changed by the child).
+* **State:** This is internal data managed *within* a component. It can change over time based on user actions or events, and changing it triggers a re-render of the component.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. What does the useState hook do, and where did you use it in this project?
+`useState` is a React Hook that lets you add state variables to functional components. 
+* *Usage in this project:* I used `usestate` to manage the fetched technologies list (`users`) and the user's selected technology stack (`addedStack`).
 
-```
+### 4. What does the useEffect hook do, and why did you need it to load the JSON data?
+`useEffect` lets you perform side effects (like data fetching, subscriptions, or manually changing the DOM) in functional components after rendering. 
+* *Why it's needed:* Fetching data is an asynchronous side effect. Running it inside `useEffect` ensures the fetch request happens once when the component mounts, preventing infinite loops.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### 5. Why does every item in a .map() list need a unique key prop?
+React uses keys to efficiently identify which items in a list have changed, been added, or been removed. Unique keys help React optimize rendering performance and maintain correct component states.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+### 6. What is conditional rendering? Show one place you used it.
+Conditional rendering is the ability to render different UI elements or components based on certain conditions (like `if` statements or ternary operators).
+* *Example used in this project (Empty Stack Message):*
+  ```jsx
+  {addedStack.length === 0 ? (
+    <div className="text-center text-gray-400">Your stack is empty.</div>
+  ) : (
+    <div>{/* Render selected items */}</div>
+  )}
